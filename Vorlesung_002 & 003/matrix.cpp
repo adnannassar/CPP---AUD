@@ -29,6 +29,6 @@ void print()
         {
             std::cout << matrix[i][j] << "\t";
         }
-        std::cout<<std::endl;
+        std::cout << std::endl;
     }
 }
