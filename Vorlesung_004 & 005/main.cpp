@@ -20,6 +20,7 @@ void swapPTR(int *x, int *y)
 
 struct Adress
 {
+    
     string name;
     int matrnr;
     Adress(string name, int matrnr)
