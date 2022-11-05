@@ -20,7 +20,6 @@ void swapPTR(int *x, int *y)
 
 struct Adress
 {
-    
     string name;
     int matrnr;
     Adress(string name, int matrnr)
@@ -53,9 +52,11 @@ void print(int a[], unsigned length)
     cout << endl;
 }
 
-struct Test{
-    Test(){
-        cout<<this<<" +"<<endl;
+struct Test
+{
+    Test()
+    {
+        cout << this << " +" << endl;
     }
     ~Test()
     {
@@ -73,10 +74,13 @@ void f()
 int main()
 {
     int *p = new int;
+
     int *p2 = new int[5];
-   
-    delete    p;
+
+    delete p;
     delete[] p2;
+
+    f();
 
     return 1;
 }
