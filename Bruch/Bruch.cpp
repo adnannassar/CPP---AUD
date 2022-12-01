@@ -107,7 +107,6 @@ bool Bruch::operator!=(Bruch b)
 {
     return this->zähler != b.zähler || this->nenner != b.nenner;
 }
-//     friend std::ostream &operator<<(std::ostream &out, Bruch b);
 std::ostream &operator<<(std::ostream &out, Bruch b)
 {
     if (b.nenner == 1 || b.zähler % b.nenner == 0)
