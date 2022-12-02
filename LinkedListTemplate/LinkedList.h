@@ -2,16 +2,16 @@
 #include <stdbool.h>
 
 using namespace std;
-
+template <typename T>
 class LinkedList
 {
 private:
     struct Node
     {
-        const char *data;
+        T data;
         Node *next;
         Node *before;
-        Node(const char *data, Node *next, Node *before) : data(data), next(next), before(before) {}
+        Node(T data, Node *next, Node *before) : data(data), next(next), before(before) {}
     };
 
     typedef struct Node *node;
@@ -25,24 +25,30 @@ public:
     LinkedList(const LinkedList &orig);
 
     // ~LinkedList();
-    void append(const char *data);
+    void append(T data);
     bool isEmpty();
-    void insert(const char *data, int p);
+    void insert(T data, int p);
     void remove(int p);
-    const char *get(int p);
-    int index_of(const char *data);
-    const char *getFirst();
-    const char *getLast();
+    T get(int p);
+    int index_of(T data);
+    T getFirst();
+    T getLast();
     void printList();
     int countElements();
+    void visit_all(void (*work)(T t));
 };
 
-LinkedList::LinkedList() : first(nullptr), last(nullptr), counter(0) {}
-bool LinkedList::isEmpty()
+template <typename T>
+LinkedList<T>::LinkedList() : first(nullptr), last(nullptr), counter(0) {}
+
+template <typename T>
+bool LinkedList<T>::isEmpty()
 {
     return first == nullptr || counter == 0;
 }
-void LinkedList::append(const char *data)
+
+template <typename T>
+void LinkedList<T>::append(T data)
 {
     node toBeAdded = new Node(data, nullptr, nullptr);
     // add first
@@ -60,7 +66,9 @@ void LinkedList::append(const char *data)
         counter++;
     }
 }
-void LinkedList::printList()
+
+template <typename T>
+void LinkedList<T>::printList()
 {
     node ptr = first;
     while (ptr->next != nullptr)
@@ -71,19 +79,23 @@ void LinkedList::printList()
     }
     cout << ptr->data << endl;
 }
-int LinkedList::countElements()
+
+template <typename T>
+int LinkedList<T>::countElements()
 {
     return counter;
 }
-const char *LinkedList::get(int p)
+
+template <typename T>
+T LinkedList<T>::get(int p)
 {
     if (isEmpty())
     {
-        return "List ist leer!";
+        return T();
     }
     else if (p < 0 || p > counter)
     {
-        return "Ungültige Position!";
+        return T();
     }
     else
     {
@@ -97,7 +109,9 @@ const char *LinkedList::get(int p)
         return ptr->data;
     }
 }
-int LinkedList::index_of(const char *data)
+
+template <typename T>
+int LinkedList<T>::index_of(T data)
 {
     if (isEmpty())
     {
@@ -119,9 +133,11 @@ int LinkedList::index_of(const char *data)
         return -1;
     }
 }
-const char *LinkedList::getFirst()
+
+template <typename T>
+T LinkedList<T>::getFirst()
 {
-    return isEmpty() ? nullptr : first->data;
+    return isEmpty() ? T() : first->data;
     /*
 
       if(isEmpty()){
@@ -132,11 +148,15 @@ const char *LinkedList::getFirst()
 
   */
 }
-const char *LinkedList::getLast()
+
+template <typename T>
+T LinkedList<T>::getLast()
 {
-    return isEmpty() ? nullptr : last->data;
+    return isEmpty() ? T() : last->data;
 }
-void LinkedList::insert(const char *data, int p)
+
+template <typename T>
+void LinkedList<T>::insert(T data, int p)
 {
     node toBeAdded = new Node(data, nullptr, nullptr);
     if (p < 0)
@@ -174,7 +194,9 @@ void LinkedList::insert(const char *data, int p)
         counter++;
     }
 }
-void LinkedList::remove(int p)
+
+template <typename T>
+void LinkedList<T>::remove(int p)
 {
     node toBeDeleted;
     if (isEmpty())
@@ -218,5 +240,16 @@ void LinkedList::remove(int p)
         ptr->next->before = ptr->before;
         delete toBeDeleted;
         counter--;
+    }
+}
+
+template <typename T>
+void LinkedList<T>::visit_all(void (*work)(T t))
+{
+    node ptr = first;
+    while (ptr->next != nullptr)
+    {
+        work(ptr->data);
+        ptr = ptr->next;
     }
 }
